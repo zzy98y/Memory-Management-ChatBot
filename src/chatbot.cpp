@@ -59,10 +59,8 @@ ChatBot &ChatBot::operator = (const ChatBot &chatbot) {
     if (this == &chatbot) {
         return *this;
     }
-
-    if (_image != NULL) {
-        delete _image;
-    }
+    
+    delete _image;
 
     _chatLogic = chatbot._chatLogic; 
     _rootNode = chatbot._rootNode; 
@@ -76,6 +74,7 @@ ChatBot &ChatBot::operator = (const ChatBot &chatbot) {
 ChatBot::ChatBot(ChatBot &&chatbot) {
     std::cout << "Move constructor is called" << "\n";
     _chatLogic = chatbot._chatLogic; 
+    _chatLogic->SetChatbotHandle(this);
     _rootNode = chatbot._rootNode; 
     _image = chatbot._image; 
     chatbot._chatLogic = nullptr;
@@ -90,11 +89,10 @@ ChatBot &ChatBot::operator = (ChatBot &&chatbot) {
         return *this;
     }
 
-    if (_image != NULL) {
-        delete _image;
-    }
+    delete _image;
     
     _chatLogic = chatbot._chatLogic; 
+    _chatLogic->SetChatbotHandle(this);
     _rootNode = chatbot._rootNode; 
     _image = chatbot._image; 
     chatbot._chatLogic = nullptr;
